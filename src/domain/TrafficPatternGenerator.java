@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Random;
+
 import utils.Graph;
 import utils.LogicGraph;
 
@@ -83,7 +85,7 @@ public class TrafficPatternGenerator {
 		for (int i = 0; i < vertices.length - 1; i++) {
 			int origin = vertices[i];
 			int destination = vertices[i + 1];
-			LogicGraph.addEdge(origin, destination, 1, graph);
+			LogicGraph.addEdge(origin, destination, new Random().nextInt(8) + 3, graph);
 		}
 	}
 
@@ -91,7 +93,7 @@ public class TrafficPatternGenerator {
 		for (int i = vertices.length - 1; i > 0; i--) {
 			int origin = vertices[i];
 			int destination = vertices[i - 1];
-			LogicGraph.addEdge(origin, destination, 1, graph);
+			LogicGraph.addEdge(origin, destination, new Random().nextInt(8) + 3, graph);
 		}
 	}
 
