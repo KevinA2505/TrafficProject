@@ -22,7 +22,7 @@
 			</children>
 		</Pane>
       <Button fx:id="bShowGraph" layoutX="971.0" layoutY="698.0"
-	mnemonicParsing="false" onAction="#toShowGraph"
+	mnemonicParsing="false" onAction="#toShowGraphInfoInConsole"
 	text="Aux show in console the Graph" />
 	</children>
 </AnchorPane>

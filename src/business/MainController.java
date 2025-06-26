@@ -38,7 +38,7 @@ public class MainController {
 	private Button bGenerateCar;
 	@FXML
 	private Button bShowGraph;
-	
+
 	private GridPane grid;
 
 	@FXML
@@ -75,16 +75,14 @@ public class MainController {
 	public void toAddCar(ActionEvent event) {
 		if (grid != null) {
 			try {
-				// Crear un nuevo carro
 				Car car = new Car(grid, sSize.getValue());
-				
+
 				Thread carThread = new Thread(car);
-				carThread.setDaemon(true); // Hace que el hilo se cierre cuando se cierre la aplicación
+				carThread.setDaemon(true);
 				carThread.start();
-				
-				
+
 			} catch (Exception e) {
-				System.err.println("Error al crear el carro: " + e.getMessage());
+				System.err.println("Error in car: " + e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -92,7 +90,7 @@ public class MainController {
 
 	// Event Listener on Button[#bShowGraph].onAction
 	@FXML
-	public void toShowGraph(ActionEvent event) {
+	public void toShowGraphInfoInConsole(ActionEvent event) {
 		GraphRoad.displayGraph();
 
 	}
