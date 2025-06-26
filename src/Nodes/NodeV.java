@@ -8,13 +8,15 @@ public class NodeV {
 
 	private int data;
 	private Queue cars;
-	private RoadList roads;
+	private RoadList xRoads;
+	private RoadList yRoads;
 	private EdgeList edges;
 
 	public NodeV(int data) {
 		this.data = data;
 		this.cars = new Queue();
-		this.roads = new RoadList();
+		this.xRoads = new RoadList();
+		this.yRoads = new RoadList();
 		this.edges = new EdgeList();
 	}
 
@@ -34,12 +36,20 @@ public class NodeV {
 		this.cars = cars;
 	}
 
-	public RoadList getRoads() {
-		return roads;
+	public RoadList getxRoads() {
+		return xRoads;
 	}
 
-	public void setRoads(RoadList roads) {
-		this.roads = roads;
+	public void setxRoads(RoadList xRoads) {
+		this.xRoads = xRoads;
+	}
+
+	public RoadList getyRoads() {
+		return yRoads;
+	}
+
+	public void setyRoads(RoadList yRoads) {
+		this.yRoads = yRoads;
 	}
 
 	public EdgeList getEdges() {

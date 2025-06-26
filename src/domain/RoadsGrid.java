@@ -58,7 +58,7 @@ public class RoadsGrid {
 			}
 		}
 
-		// assignRoadsToVertices(n, roadGraph);
+		Roads.assignRoadsToVertices(n, roadGraph);
 
 		TrafficPatternGenerator.generateTrafficPattern(n, roadGraph);
 		return g;
