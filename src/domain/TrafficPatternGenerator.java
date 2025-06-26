@@ -2,8 +2,8 @@ package domain;
 
 import java.util.Random;
 
-import utils.Graph;
-import utils.LogicGraph;
+import LogicStructures.LogicGraph;
+import Structures.Graph;
 
 public class TrafficPatternGenerator {
 	

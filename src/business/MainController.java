@@ -3,6 +3,15 @@ package business;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Button;
+import LogicStructures.LogicEdgeList;
+import LogicStructures.LogicRoadList;
+import LogicStructures.LogicVerticesList;
+import Nodes.NodeV;
+import Nodes.NodeVertex;
+import Structures.EdgeList;
+import Structures.Graph;
+import Structures.RoadList;
+import Structures.VerticesList;
 import domain.Car;
 import domain.GraphRoad;
 import domain.Incident;
@@ -15,15 +24,6 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import utils.EdgeList;
-import utils.Graph;
-import utils.LogicEdgeList;
-import utils.LogicRoadList;
-import utils.LogicVerticesList;
-import utils.NodeV;
-import utils.NodeVertex;
-import utils.RoadList;
-import utils.VerticesList;
 
 public class MainController {
 	@FXML

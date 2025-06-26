@@ -1,13 +1,13 @@
 package domain;
 
-import utils.Graph;
-import utils.LogicEdgeList;
-import utils.LogicVerticesList;
-import utils.Node;
-import utils.NodeE;
-import utils.NodeV;
-import utils.NodeVertex;
-import utils.EdgeList;
+import LogicStructures.LogicEdgeList;
+import LogicStructures.LogicVerticesList;
+import Nodes.Node;
+import Nodes.NodeE;
+import Nodes.NodeV;
+import Nodes.NodeVertex;
+import Structures.EdgeList;
+import Structures.Graph;
 
 public class GraphRoad {
 
