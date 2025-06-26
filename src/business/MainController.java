@@ -18,7 +18,11 @@ import javafx.scene.layout.Pane;
 import utils.EdgeList;
 import utils.Graph;
 import utils.LogicEdgeList;
+import utils.LogicRoadList;
+import utils.LogicVerticesList;
+import utils.NodeV;
 import utils.NodeVertex;
+import utils.RoadList;
 import utils.VerticesList;
 
 public class MainController {
@@ -38,6 +42,8 @@ public class MainController {
 	private Button bGenerateCar;
 	@FXML
 	private Button bShowGraph;
+	@FXML
+	private Button bRoads;
 
 	private GridPane grid;
 
@@ -93,5 +99,51 @@ public class MainController {
 	public void toShowGraphInfoInConsole(ActionEvent event) {
 		GraphRoad.displayGraph();
 
+	}// Event Listener on Button[#bRoads].onAction
+
+	@FXML
+	public void toShowRoads(ActionEvent event) {
+	    Graph graph = GraphRoad.getGraph();
+	    
+	    if (graph == null || LogicVerticesList.isEmpty(graph.getVertices())) {
+	        System.out.println("No hay vértices en el grafo");
+	        return;
+	    }
+	    
+	    System.out.println("=== ROADS DE CADA VÉRTICE ===");
+	    
+	    NodeVertex currentVertex = graph.getVertices().getFirst();
+	    
+	    while (currentVertex != null) {
+	        NodeV vertex = currentVertex.getNodeV();
+	        int vertexId = vertex.getData();
+	        
+	        // Convertir ID a coordenadas para mostrar de forma legible
+	        int[] coords = vertexIdToCoordinates(vertexId);
+	        String vertexCoords = "(" + coords[0] + "," + coords[1] + ")";
+	        
+	        System.out.print("Vértice " + vertexCoords + " -> Roads: ");
+	        
+	        // Mostrar la lista de roads de este vértice
+	        RoadList roads = vertex.getRoads();
+	        String roadsList = LogicRoadList.printList(roads);
+	        
+	        if (roadsList.isEmpty()) {
+	            System.out.println("Sin roads");
+	        } else {
+	            System.out.println(roadsList);
+	        }
+	        
+	        currentVertex = currentVertex.getNext();
+	    }
+	    
+	    System.out.println("=============================");
+	}
+
+	// Método auxiliar para convertir ID de vértice a coordenadas
+	private int[] vertexIdToCoordinates(int vertexId) {
+	    int row = vertexId / 1000;
+	    int col = vertexId % 1000;
+	    return new int[]{row, col};
 	}
 }

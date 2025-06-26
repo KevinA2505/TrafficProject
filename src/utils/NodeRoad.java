@@ -1,31 +1,45 @@
 package utils;
 
-import javafx.scene.control.Button;
 
 public class NodeRoad {
 
-	private Button road;
+	private int i;
+	private int j;
 	private NodeRoad next;
-	
-	public NodeRoad(Button road) {
+
+	public NodeRoad(int i, int j) {
 		super();
-		this.road = road;
+		this.i = i;
+		this.j = j;
 		this.next = null;
 	}
-	public Button getRoad() {
-		return road;
+
+	public int getI() {
+		return i;
 	}
-	public void setRoad(Button road) {
-		this.road = road;
+
+	public void setI(int i) {
+		this.i = i;
 	}
+
+	public int getJ() {
+		return j;
+	}
+
+	public void setJ(int j) {
+		this.j = j;
+	}
+
 	public NodeRoad getNext() {
 		return next;
 	}
+
 	public void setNext(NodeRoad next) {
 		this.next = next;
 	}
+
 	@Override
 	public String toString() {
-		return road.getText();
+		return "(" + i + " ," + j + ")";
 	}
 }

@@ -5,7 +5,11 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import utils.Graph;
+import utils.LogicRoadList;
 import utils.LogicVerticesList;
+import utils.NodeV;
+import utils.NodeVertex;
+import utils.RoadList;
 
 public class RoadsGrid {
 
@@ -48,11 +52,13 @@ public class RoadsGrid {
 						/*
 						 * Para darle color a las intersecciones.
 						 */
-						//b.setStyle("-fx-background-color: #bbb; -fx-text-fill: white;");
+						// b.setStyle("-fx-background-color: #bbb; -fx-text-fill: white;");
 					}
 				}
 			}
 		}
+
+		//assignRoadsToVertices(n, roadGraph);
 
 		TrafficPatternGenerator.generateTrafficPattern(n, roadGraph);
 		return g;
@@ -86,6 +92,67 @@ public class RoadsGrid {
 		}
 
 		return count;
+	}
+
+	private static void assignRoadsToVertices(int n, Graph roadGraph) {
+		int gridSize = n * n + n + 1;
+
+		// Recorrer todos los vértices del grafo
+		NodeVertex currentVertex = roadGraph.getVertices().getFirst();
+
+		while (currentVertex != null) {
+			NodeV vertex = currentVertex.getNodeV();
+			int vertexId = vertex.getData();
+			int[] coords = vertexIdToCoordinates(vertexId);
+			int row = coords[0];
+			int col = coords[1];
+
+			// Explorar en las 4 direcciones desde este vértice
+			int[][] directions = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } }; // derecha, izquierda, abajo, arriba
+
+			for (int[] dir : directions) {
+				exploreDirection(row, col, dir[0], dir[1], n, gridSize, vertex.getRoads(), roadGraph);
+			}
+
+			currentVertex = currentVertex.getNext();
+		}
+	}
+
+	private static void exploreDirection(int startRow, int startCol, int deltaRow, int deltaCol, int n, int gridSize,
+			RoadList roadList, Graph roadGraph) {
+
+		int currentRow = startRow + deltaRow;
+		int currentCol = startCol + deltaCol;
+
+// Continuar en la dirección hasta encontrar otro vértice o salir del grid
+		while (currentRow >= 0 && currentRow < gridSize && currentCol >= 0 && currentCol < gridSize) {
+
+// Verificar si esta posición es un camino válido
+			boolean isRoad = isH(currentRow, n) || isV(currentCol, n);
+
+			if (!isRoad) {
+				break; // No es un camino válido, parar
+			}
+
+// Verificar si esta posición es un vértice del grafo
+			if (shouldCreateVertex(currentRow, currentCol, n, gridSize)) {
+// Es otro vértice, parar sin agregarlo
+				break;
+			}
+
+// Agregar esta posición a la lista de caminos del vértice origen
+			LogicRoadList.add(currentRow, currentCol, roadList);
+
+// Avanzar en la misma dirección
+			currentRow += deltaRow;
+			currentCol += deltaCol;
+		}
+	}
+
+	private static int[] vertexIdToCoordinates(int vertexId) {
+		int row = vertexId / 1000;
+		int col = vertexId % 1000;
+		return new int[] { row, col };
 	}
 
 	private static int generateVertexId(int row, int col) {

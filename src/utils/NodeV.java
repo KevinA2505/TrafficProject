@@ -4,11 +4,13 @@ public class NodeV {
 
 	private int data;
 	private Queue cars;
+	private RoadList roads;
 	private EdgeList edges;
 
 	public NodeV(int data) {
 		this.data = data;
 		this.cars = new Queue();
+		this.roads = new RoadList();
 		this.edges = new EdgeList();
 	}
 
@@ -26,6 +28,14 @@ public class NodeV {
 
 	public void setCars(Queue cars) {
 		this.cars = cars;
+	}
+
+	public RoadList getRoads() {
+		return roads;
+	}
+
+	public void setRoads(RoadList roads) {
+		this.roads = roads;
 	}
 
 	public EdgeList getEdges() {
