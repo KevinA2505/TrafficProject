@@ -45,7 +45,10 @@ public class RoadsGrid {
 						int vertexId = generateVertexId(row, col);
 						LogicVerticesList.add(vertexId, roadGraph.getVertices());
 
-						b.setStyle("-fx-background-color: #bbb; -fx-text-fill: white;");
+						/*
+						 * Para darle color a las intersecciones.
+						 */
+						//b.setStyle("-fx-background-color: #bbb; -fx-text-fill: white;");
 					}
 				}
 			}
