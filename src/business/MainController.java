@@ -16,6 +16,7 @@ import domain.Car;
 import domain.GraphRoad;
 import domain.Incident;
 import domain.Road;
+import domain.RoadLister;
 import domain.RoadsGrid;
 import javafx.event.ActionEvent;
 
@@ -103,6 +104,7 @@ public class MainController {
 
 	@FXML
 	public void toShowRoads(ActionEvent event) {
-		
+		Graph graph = GraphRoad.getGraph();
+		RoadLister.print(graph);
 	}
 }
