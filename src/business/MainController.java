@@ -3,8 +3,13 @@ package business;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Button;
+import LogicStructures.LogicQueue;
+import LogicStructures.LogicVerticesList;
+import Nodes.NodeVertex;
 import Structures.Graph;
 import Structures.RoadList;
+import Structures.VerticesList;
+import domain.Car;
 import domain.GraphRoad;
 import domain.Incident;
 import domain.RoadLister;
@@ -69,9 +74,28 @@ public class MainController {
 	}
 
 	// Event Listener on Button[#bGenerateCar].onAction
-	@FXML
-	public void toAddCar(ActionEvent event) {
-	}
+    @FXML
+    public void toAddCar(ActionEvent event) {
+            Graph graph = GraphRoad.getGraph();
+            if (graph == null || graph.getVertices() == null)
+                    return;
+
+            VerticesList vList = graph.getVertices();
+            if (LogicVerticesList.isEmpty(vList))
+                    return;
+
+            NodeVertex startVertex = vList.getFirst();
+            NodeVertex endVertex = vList.getLast();
+
+            if (startVertex == null || endVertex == null)
+                    return;
+
+            Car car = new Car(startVertex.getNodeV(), endVertex.getNodeV());
+
+            LogicQueue.add(car, startVertex.getNodeV().getCars());
+
+            new Thread(car).start();
+    }
 
 	// Event Listener on Button[#bShowGraph].onAction
 	@FXML
