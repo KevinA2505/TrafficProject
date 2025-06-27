@@ -8,7 +8,6 @@ import javafx.scene.layout.GridPane;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import Nodes.NodeV;
 import LogicStructures.LogicQueue;
@@ -22,7 +21,10 @@ public class Car implements Runnable {
 	private volatile boolean running = true;
 	private final Random rand = new Random();
         private Button currentButton;
-        private static final AtomicInteger carCounter = new AtomicInteger(0);
+        private static int carCounter = 0;
+        private static synchronized int nextId() {
+                return ++carCounter;
+        }
         private final int carId;
         private Button previousButton;
         private NodeV currentVertex;
@@ -31,7 +33,7 @@ public class Car implements Runnable {
 		this.gridPane = gridPane;
 		this.n = n;
                 this.gridSize = n * n + n + 1;
-                this.carId = carCounter.incrementAndGet();
+                this.carId = nextId();
 
                 findInitialPosition();
                 highlightCurrentPosition();
