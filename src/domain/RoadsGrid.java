@@ -1,11 +1,7 @@
 package domain;
 
-import LogicStructures.LogicRoadList;
 import LogicStructures.LogicVerticesList;
-import Nodes.NodeV;
-import Nodes.NodeVertex;
 import Structures.Graph;
-import Structures.RoadList;
 import javafx.scene.control.Button;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
