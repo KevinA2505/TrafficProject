@@ -2,6 +2,7 @@ package LogicStructures;
 
 import Nodes.QueueNode;
 import Structures.Queue;
+import domain.Car;
 
 public class LogicQueue {
 
@@ -9,13 +10,13 @@ public class LogicQueue {
 		return queue.getFirst() == null;
 	}
 	
-	public static void add(int i, Queue queue) {
-		if(isEmpty(queue)) {
-			QueueNode newNode = new QueueNode(i);
-			queue.setFirst(newNode);
-		} else {
-			QueueNode newNode = new QueueNode(i);
-			QueueNode temp = queue.getFirst();
+        public static void add(Car car, Queue queue) {
+                if(isEmpty(queue)) {
+                        QueueNode newNode = new QueueNode(car);
+                        queue.setFirst(newNode);
+                } else {
+                        QueueNode newNode = new QueueNode(car);
+                        QueueNode temp = queue.getFirst();
 			
 			while(temp.getNext() != null) {
 				temp = temp.getNext();
@@ -42,13 +43,17 @@ public class LogicQueue {
 		String text = "";
 		QueueNode temp = queue.getFirst();
 		
-		do {
-			text += temp.getI();
-			if(temp.getNext() != null) {
-				text += " ,";
-			}
-			temp = temp.getNext();
-		} while (temp != null);
+                do {
+                        if (temp.getCar() != null) {
+                                text += temp.getCar().getCarId();
+                        } else {
+                                text += "null";
+                        }
+                        if(temp.getNext() != null) {
+                                text += " ,";
+                        }
+                        temp = temp.getNext();
+                } while (temp != null);
 		return text;
 	}
 }
