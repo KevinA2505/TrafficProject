@@ -24,9 +24,27 @@ public class GraphRoad {
 		return graph;
 	}
 
-	public static synchronized void resetGraph() {
-		graph = new Graph();
-	}
+        public static synchronized void resetGraph() {
+                graph = new Graph();
+        }
+
+        public static NodeV getNodeAt(int row, int col) {
+                if (graph == null || LogicVerticesList.isEmpty(graph.getVertices())) {
+                        return null;
+                }
+
+                int id = row * 1000 + col;
+                NodeVertex current = graph.getVertices().getFirst();
+
+                while (current != null) {
+                        if (current.getNodeV().getData() == id) {
+                                return current.getNodeV();
+                        }
+                        current = current.getNext();
+                }
+
+                return null;
+        }
 
 	public static void displayGraph() {
 		if (graph == null || LogicVerticesList.isEmpty(graph.getVertices())) {

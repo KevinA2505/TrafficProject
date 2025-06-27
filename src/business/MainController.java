@@ -80,9 +80,9 @@ public class MainController {
 	// Event Listener on Button[#bGenerateCar].onAction
 	@FXML
 	public void toAddCar(ActionEvent event) {
-		if (grid != null) {
-			try {
-				Car car = new Car(grid, sSize.getValue());
+                if (grid != null) {
+                        try {
+                                Car car = new Car(grid, sSize.getValue(), GraphRoad.getGraph());
 
 				Thread carThread = new Thread(car);
 				carThread.setDaemon(true);
