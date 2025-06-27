@@ -9,6 +9,7 @@ import Nodes.NodeV;
 import Nodes.NodeVertex;
 import Structures.Graph;
 import Structures.RoadList;
+import business.MainController;
 
 public class Car implements Runnable {
 
@@ -16,13 +17,15 @@ public class Car implements Runnable {
 	private static final int VELOCITY_STANDARD = 1000;
 	private final int id;
 	private NodeV origin;
-	private NodeV destination;
+        private NodeV destination;
+        private MainController controller;
 
-	public Car(NodeV origin, NodeV destination) {
-		this.id = ++counter;
-		this.origin = origin;
-		this.destination = destination;
-	}
+        public Car(NodeV origin, NodeV destination, MainController controller) {
+                this.id = ++counter;
+                this.origin = origin;
+                this.destination = destination;
+                this.controller = controller;
+        }
 
         @Override
         public void run() {
@@ -43,8 +46,9 @@ public class Car implements Runnable {
 
                                 long totalDelay = 0;
                                 RoadList rList = null;
+                                NodeV next = null;
                                 if (i < path.length - 1) {
-                                        NodeV next = findNode(path[i + 1], g);
+                                        next = findNode(path[i + 1], g);
                                         NodeE edge = findEdge(node, next);
                                         if (edge != null) {
                                                 totalDelay = (long) edge.getWeight() * VELOCITY_STANDARD;
@@ -57,6 +61,9 @@ public class Car implements Runnable {
                                         long stepDelay = (steps > 0) ? totalDelay / steps : totalDelay;
                                         NodeRoad cursor = rList.getFirst();
                                         while (cursor != null) {
+                                                if (controller != null) {
+                                                        controller.updateCarPosition(cursor.getI(), cursor.getJ());
+                                                }
                                                 try {
                                                         Thread.sleep(stepDelay);
                                                 } catch (InterruptedException e) {
@@ -66,6 +73,11 @@ public class Car implements Runnable {
                                                 System.out.println(this + " -> (" + cursor.getI() + "," + cursor.getJ() + ")");
                                                 cursor = cursor.getNext();
                                         }
+                                        if (next != null && controller != null) {
+                                                int nrow = next.getData() / 1000;
+                                                int ncol = next.getData() % 1000;
+                                                controller.updateCarPosition(nrow, ncol);
+                                        }
                                         try {
                                                 Thread.sleep(stepDelay);
                                         } catch (InterruptedException e) {
@@ -73,6 +85,11 @@ public class Car implements Runnable {
                                                 return;
                                         }
                                 } else {
+                                        if (i < path.length - 1 && next != null && controller != null) {
+                                                int nrow = next.getData() / 1000;
+                                                int ncol = next.getData() % 1000;
+                                                controller.updateCarPosition(nrow, ncol);
+                                        }
                                         try {
                                                 Thread.sleep(totalDelay);
                                         } catch (InterruptedException e) {
