@@ -7,28 +7,15 @@ import Nodes.NodeVertex;
 import Structures.Graph;
 import Structures.RoadList;
 
-/**
- * Utility class that prints, to the console, the X and Y road lists of every
- * vertex in the road graph. Intended for quick debugging from controllers or
- * unit tests.
- */
 public final class RoadLister {
 
-    private RoadLister() { /* util class */ }
-
-    /**
-     * Iterates over every vertex in {@code graph} and prints its road lists in
-     * human‑readable form:
-     *
-     * Nodo 0,0
-     *   X → (0,1) (0,2) (0,3)
-     *   Y → (1,0) (2,0) (3,0)
-     *
-     * If a vertex has an empty list on an axis, it prints “(vacío)”.
-     */
+    private RoadLister() { 
+    	
+    }
+    
     public static void print(Graph graph) {
         if (graph == null || graph.getVertices() == null) {
-            System.out.println("[RoadLister] Grafo vacío o nulo.");
+            System.out.println("Grafo vacío o nulo.");
             return;
         }
 
@@ -47,9 +34,7 @@ public final class RoadLister {
             current = current.getNext();
         }
     }
-
-    /* --------------------------------------------------------------------- */
-
+    
     private static void printRoadList(RoadList list) {
         if (list == null || LogicRoadList.isEmpty(list)) {
             System.out.println("(vacío)");
@@ -63,7 +48,6 @@ public final class RoadLister {
         System.out.println();
     }
 
-    /** Decodifica id → "fila,col" suponiendo que id = fila*1000 + col. */
     private static String toCoord(int id) {
         int row = id / 1000;
         int col = id % 1000;
