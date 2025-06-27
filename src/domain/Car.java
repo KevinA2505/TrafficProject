@@ -9,11 +9,11 @@ import Structures.Graph;
 
 public class Car implements Runnable {
 
-        private static int counter = 0;
-        private static final int VELOCITY_STANDARD = 1000;
+	private static int counter = 0;
+	private static final int VELOCITY_STANDARD = 1000;
 	private final int id;
-	private final NodeV origin;
-	private final NodeV destination;
+	private NodeV origin;
+	private NodeV destination;
 
 	public Car(NodeV origin, NodeV destination) {
 		this.id = ++counter;
@@ -27,57 +27,68 @@ public class Car implements Runnable {
 		if (g == null)
 			return;
 
-                int[] path = Dijkstra.buildPath(origin.getData(), destination.getData(), g);
-                for (int i = 0; i < path.length; i++) {
-                        NodeV node = findNode(path[i], g);
-                        if (node == null)
-                                continue;
+		while (true) {
+			int[] path = Dijkstra.buildPath(origin.getData(), destination.getData(), g);
 
-                        System.out.println(this + " -> " + toCoord(node.getData()));
-                        LogicQueue.add(this, node.getCars());
+			for (int i = 0; i < path.length; i++) {
+				NodeV node = findNode(path[i], g);
+				if (node == null)
+					continue;
 
-                        long delay = 0;
-                        if (i < path.length - 1) {
-                                NodeV next = findNode(path[i + 1], g);
-                                NodeE edge = findEdge(node, next);
-                                if (edge != null) {
-                                        delay = (long) edge.getWeight() * VELOCITY_STANDARD;
-                                }
-                        }
+				System.out.println(this + " -> " + toCoord(node.getData()));
+				LogicQueue.add(this, node.getCars());
 
-                        try {
-                                Thread.sleep(delay);
-                        } catch (InterruptedException e) {
-                                Thread.currentThread().interrupt();
-                        }
-                        LogicQueue.pop(node.getCars());
-                }
-        }
+				long delay = 0;
+				if (i < path.length - 1) {
+					NodeV next = findNode(path[i + 1], g);
+					NodeE edge = findEdge(node, next);
+					if (edge != null) {
+						delay = (long) edge.getWeight() * VELOCITY_STANDARD;
+					}
+				}
 
-        private NodeV findNode(int data, Graph g) {
-                if (g.getVertices() == null)
-                        return null;
-                NodeVertex curr = g.getVertices().getFirst();
-                while (curr != null) {
-                        if (curr.getNodeV().getData() == data)
-                                return curr.getNodeV();
-                        curr = curr.getNext();
-                }
-                return null;
-        }
+				try {
+					Thread.sleep(delay);
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+					return;
+				}
 
-        private NodeE findEdge(NodeV origin, NodeV destination) {
-                if (origin == null || origin.getEdges() == null)
-                        return null;
-                Node current = origin.getEdges().getFirst();
-                while (current != null) {
-                        NodeE e = current.getNodeE();
-                        if (e.getDestination() == destination)
-                                return e;
-                        current = current.getNext();
-                }
-                return null;
-        }
+				LogicQueue.pop(node.getCars());
+			}
+
+			System.out.println("Ruta terminada");
+
+			int temp = origin.getData();
+			origin.setData(destination.getData());
+			destination.setData(temp);
+		}
+	}
+
+	private NodeV findNode(int data, Graph g) {
+		if (g.getVertices() == null)
+			return null;
+		NodeVertex curr = g.getVertices().getFirst();
+		while (curr != null) {
+			if (curr.getNodeV().getData() == data)
+				return curr.getNodeV();
+			curr = curr.getNext();
+		}
+		return null;
+	}
+
+	private NodeE findEdge(NodeV origin, NodeV destination) {
+		if (origin == null || origin.getEdges() == null)
+			return null;
+		Node current = origin.getEdges().getFirst();
+		while (current != null) {
+			NodeE e = current.getNodeE();
+			if (e.getDestination() == destination)
+				return e;
+			current = current.getNext();
+		}
+		return null;
+	}
 
 	public int getId() {
 		return id;
@@ -89,16 +100,16 @@ public class Car implements Runnable {
 
 	public NodeV getDestination() {
 		return destination;
-        }
+	}
 
-        @Override
-        public String toString() {
-                return "Car " + id;
-        }
+	@Override
+	public String toString() {
+		return "Car " + id;
+	}
 
-        private static String toCoord(int id) {
-                int row = id / 1000;
-                int col = id % 1000;
-                return "(" + row + "," + col + ")";
-        }
+	private static String toCoord(int id) {
+		int row = id / 1000;
+		int col = id % 1000;
+		return "(" + row + "," + col + ")";
+	}
 }
