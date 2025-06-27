@@ -1,38 +1,39 @@
 package Nodes;
 
+import domain.Car;
+
 public class QueueNode {
 
-	private int i;
-	private QueueNode next;
+        private Car car;
+        private QueueNode next;
 
-	public QueueNode() {
-		this.i = ' ';
-		this.next = null;
-	}
+       public QueueNode() {
+               this(null);
+       }
 
-	public QueueNode(int i) {
-		this.i = i;
-		this.next = null;
-	}
+        public QueueNode(Car car) {
+                this.car = car;
+                this.next = null;
+        }
 
-	public int getI() {
-		return i;
-	}
+        public Car getCar() {
+                return car;
+        }
 
-	public void setI(int i) {
-		this.i = i;
-	}
+        public void setCar(Car car) {
+                this.car = car;
+        }
 
-	public QueueNode getNext() {
-		return next;
-	}
+        public QueueNode getNext() {
+                return next;
+        }
 
-	public void setNext(QueueNode next) {
-		this.next = next;
-	}
+        public void setNext(QueueNode next) {
+                this.next = next;
+        }
 
-	@Override
-	public String toString() {
-		return i + "";
-	}
+        @Override
+        public String toString() {
+                return car != null ? String.valueOf(car.getCarId()) : "null";
+        }
 }
