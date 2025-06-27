@@ -80,4 +80,23 @@ public class LogicRoadList {
 
 		return text.toString();
 	}
+        public static int size(RoadList roadList) {
+                NodeRoad temp = roadList.getFirst();
+                int size = 0;
+                while (temp != null) {
+                        size++;
+                        temp = temp.getNext();
+                }
+                return size;
+        }
+
+        public static NodeRoad getAt(RoadList roadList, int index) {
+                NodeRoad temp = roadList.getFirst();
+                int i = 0;
+                while (temp != null && i < index) {
+                        temp = temp.getNext();
+                        i++;
+                }
+                return temp;
+        }
 }
