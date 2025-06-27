@@ -2,6 +2,7 @@ package LogicStructures;
 
 import Nodes.QueueNode;
 import Structures.Queue;
+import domain.Car;
 
 public class LogicQueue {
 
@@ -9,12 +10,12 @@ public class LogicQueue {
 		return queue.getFirst() == null;
 	}
 	
-	public static void add(int i, Queue queue) {
+	public static void add(Car car, Queue queue) {
 		if(isEmpty(queue)) {
-			QueueNode newNode = new QueueNode(i);
+			QueueNode newNode = new QueueNode(car);
 			queue.setFirst(newNode);
 		} else {
-			QueueNode newNode = new QueueNode(i);
+			QueueNode newNode = new QueueNode(car);
 			QueueNode temp = queue.getFirst();
 			
 			while(temp.getNext() != null) {
@@ -35,6 +36,28 @@ public class LogicQueue {
 		queue.setFirst(queue.getFirst().getNext());
 	}
 	
+	public static Car peek(Queue queue) {
+		if(isEmpty(queue)) {
+			return null;
+		}
+		return queue.getFirst().getCar();
+	}
+	
+	public static int size(Queue queue) {
+		if(isEmpty(queue)) {
+			return 0;
+		}
+		int count = 0;
+		QueueNode temp = queue.getFirst();
+		
+		while(temp != null) {
+			count++;
+			temp = temp.getNext();
+		}
+		return count;
+	}
+	
+	/*
 	public static String print(Queue queue) {
 		if(isEmpty(queue)) {
 			return null;
@@ -43,7 +66,7 @@ public class LogicQueue {
 		QueueNode temp = queue.getFirst();
 		
 		do {
-			text += temp.getI();
+			text += temp.getCar();
 			if(temp.getNext() != null) {
 				text += " ,";
 			}
@@ -51,4 +74,5 @@ public class LogicQueue {
 		} while (temp != null);
 		return text;
 	}
+	*/
 }

@@ -1,26 +1,28 @@
 package Nodes;
 
+import domain.Car;
+
 public class QueueNode {
 
-	private int i;
+	private Car car;
 	private QueueNode next;
 
 	public QueueNode() {
-		this.i = ' ';
+		this.car = null;
 		this.next = null;
 	}
 
-	public QueueNode(int i) {
-		this.i = i;
+	public QueueNode(Car car) {
+		this.car = car;
 		this.next = null;
 	}
 
-	public int getI() {
-		return i;
+	public Car getCar() {
+		return car;
 	}
 
-	public void setI(int i) {
-		this.i = i;
+	public void setCar(Car car) {
+		this.car = car;
 	}
 
 	public QueueNode getNext() {
@@ -33,6 +35,6 @@ public class QueueNode {
 
 	@Override
 	public String toString() {
-		return i + "";
+		return car != null ? car.toString() : "null";
 	}
 }
