@@ -45,8 +45,8 @@ public class MainController {
 	@FXML
 	private Button bRoads;
 
-    private GridPane grid;
-    private Node lastCarCell;
+	private GridPane grid;
+	private Node lastCarCell;
 
 	@FXML
 	private void initialize() {
@@ -58,52 +58,52 @@ public class MainController {
 		draw();
 	}
 
-    private void draw() {
-        int a = sSize.getValue();
-        GridPane g = RoadsGrid.generateGrid(a);
-        grid = g;
+	private void draw() {
+		int a = sSize.getValue();
+		GridPane g = RoadsGrid.generateGrid(a);
+		grid = g;
 
 		g.prefWidthProperty().bind(pGrid.widthProperty());
 		g.prefHeightProperty().bind(pGrid.heightProperty());
 		g.maxWidthProperty().bind(pGrid.widthProperty());
 		g.maxHeightProperty().bind(pGrid.heightProperty());
 
-        pGrid.getChildren().setAll(g);
-    }
+		pGrid.getChildren().setAll(g);
+	}
 
-    public void updateCarPosition(int row, int col) {
-        if (grid == null) {
-            return;
-        }
+	public void updateCarPosition(int row, int col) {
+		if (grid == null) {
+			return;
+		}
 
-        Node target = null;
-        for (Node node : grid.getChildren()) {
-            Integer r = GridPane.getRowIndex(node);
-            if (r == null)
-                r = 0;
-            Integer c = GridPane.getColumnIndex(node);
-            if (c == null)
-                c = 0;
-            if (r == row && c == col) {
-                target = node;
-                break;
-            }
-        }
+		Node target = null;
+		for (Node node : grid.getChildren()) {
+			Integer r = GridPane.getRowIndex(node);
+			if (r == null)
+				r = 0;
+			Integer c = GridPane.getColumnIndex(node);
+			if (c == null)
+				c = 0;
+			if (r == row && c == col) {
+				target = node;
+				break;
+			}
+		}
 
-        if (target == null)
-            return;
+		if (target == null)
+			return;
 
-        final Node btn = target;
-        Platform.runLater(() -> {
-            if (lastCarCell != null && lastCarCell instanceof Button) {
-                ((Button) lastCarCell).setStyle("");
-            }
-            if (btn instanceof Button) {
-                ((Button) btn).setStyle("-fx-background-color: red;");
-            }
-            lastCarCell = btn;
-        });
-    }
+		final Node btn = target;
+		Platform.runLater(() -> {
+			if (lastCarCell != null && lastCarCell instanceof Button) {
+				((Button) lastCarCell).setStyle("");
+			}
+			if (btn instanceof Button) {
+				((Button) btn).setStyle("-fx-background-color: red;");
+			}
+			lastCarCell = btn;
+		});
+	}
 
 	// Event Listener on Button[#bEvent].onAction
 	@FXML
@@ -112,55 +112,54 @@ public class MainController {
 	}
 
 	// Event Listener on Button[#bGenerateCar].onAction
-    @FXML
-    public void toAddCar(ActionEvent event) {
-            Graph graph = GraphRoad.getGraph();
-            if (graph == null || graph.getVertices() == null)
-                    return;
+	@FXML
+	public void toAddCar(ActionEvent event) {
+		Graph graph = GraphRoad.getGraph();
+		if (graph == null || graph.getVertices() == null)
+			return;
 
-            VerticesList vList = graph.getVertices();
-            if (LogicVerticesList.isEmpty(vList))
-                    return;
+		VerticesList vList = graph.getVertices();
+		if (LogicVerticesList.isEmpty(vList))
+			return;
 
-            int size = LogicVerticesList.size(vList);
-            if (size < 2)
-                    return;
+		int size = LogicVerticesList.size(vList);
 
-            Random rnd = new Random();
-            int startIdx;
-            int endIdx;
-            do {
-                    startIdx = rnd.nextInt(size);
-                    endIdx = rnd.nextInt(size);
-            } while (startIdx == endIdx);
+		Random r = new Random();
+		int start;
+		int end;
+		do {
+			start = r.nextInt(size);
+			end = r.nextInt(size);
+		} while (start == end);
 
-            NodeVertex startVertex = vList.getFirst();
-            for (int i = 0; i < startIdx && startVertex != null; i++) {
-                    startVertex = startVertex.getNext();
-            }
+		NodeVertex startV = vList.getFirst();
+		for (int i = 0; i < start && startV != null; i++) {
+			startV = startV.getNext();
+		}
 
-            NodeVertex endVertex = vList.getFirst();
-            for (int i = 0; i < endIdx && endVertex != null; i++) {
-                    endVertex = endVertex.getNext();
-            }
+		NodeVertex endVertex = vList.getFirst();
+		for (int i = 0; i < end && endVertex != null; i++) {
+			endVertex = endVertex.getNext();
+		}
 
-            if (startVertex == null || endVertex == null)
-                    return;
+		if (startV == null || endVertex == null)
+			return;
 
-            Car car = new Car(startVertex.getNodeV(), endVertex.getNodeV(), this);
+		Car car = new Car(startV.getNodeV(), endVertex.getNodeV(), this);
 
-            LogicQueue.add(car, startVertex.getNodeV().getCars());
+		LogicQueue.add(car, startV.getNodeV().getCars());
 
-            new Thread(car).start();
-    }
+		new Thread(car).start();
+	}
 
 	// Event Listener on Button[#bShowGraph].onAction
 	@FXML
 	public void toShowGraphInfoInConsole(ActionEvent event) {
 		GraphRoad.displayGraph();
 
-	}// Event Listener on Button[#bRoads].onAction
-
+	}
+	
+	// Event Listener on Button[#bRoads].onAction
 	@FXML
 	public void toShowRoads(ActionEvent event) {
 		Graph graph = GraphRoad.getGraph();
