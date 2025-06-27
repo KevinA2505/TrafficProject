@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import LogicStructures.LogicQueue;
 import LogicStructures.LogicVerticesList;
 import Nodes.NodeVertex;
+import java.util.Random;
 import Structures.Graph;
 import Structures.RoadList;
 import Structures.VerticesList;
@@ -84,8 +85,27 @@ public class MainController {
             if (LogicVerticesList.isEmpty(vList))
                     return;
 
+            int size = LogicVerticesList.size(vList);
+            if (size < 2)
+                    return;
+
+            Random rnd = new Random();
+            int startIdx;
+            int endIdx;
+            do {
+                    startIdx = rnd.nextInt(size);
+                    endIdx = rnd.nextInt(size);
+            } while (startIdx == endIdx);
+
             NodeVertex startVertex = vList.getFirst();
-            NodeVertex endVertex = vList.getLast();
+            for (int i = 0; i < startIdx && startVertex != null; i++) {
+                    startVertex = startVertex.getNext();
+            }
+
+            NodeVertex endVertex = vList.getFirst();
+            for (int i = 0; i < endIdx && endVertex != null; i++) {
+                    endVertex = endVertex.getNext();
+            }
 
             if (startVertex == null || endVertex == null)
                     return;
