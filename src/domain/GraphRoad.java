@@ -24,9 +24,31 @@ public class GraphRoad {
 		return graph;
 	}
 
-	public static synchronized void resetGraph() {
-		graph = new Graph();
-	}
+        public static synchronized void resetGraph() {
+                graph = new Graph();
+        }
+
+        /**
+         * Returns the {@link NodeV} located at the given coordinates of the
+         * grid, or {@code null} if there is no vertex for that position.
+         * The search is performed using the identifier {@code row*1000 + col}.
+         */
+        public static NodeV getNodeAt(int row, int col) {
+                Graph g = getGraph();
+                if (g == null || LogicVerticesList.isEmpty(g.getVertices())) {
+                        return null;
+                }
+
+                int id = row * 1000 + col;
+                NodeVertex current = g.getVertices().getFirst();
+                while (current != null) {
+                        if (current.getNodeV().getData() == id) {
+                                return current.getNodeV();
+                        }
+                        current = current.getNext();
+                }
+                return null;
+        }
 
 	public static void displayGraph() {
 		if (graph == null || LogicVerticesList.isEmpty(graph.getVertices())) {

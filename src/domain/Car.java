@@ -8,31 +8,38 @@ import javafx.scene.layout.GridPane;
 import java.util.Random;
 import Structures.RoadList;
 import Nodes.NodeRoad;
+import Nodes.NodeV;
+import Structures.Graph;
 import LogicStructures.LogicRoadList;
+import LogicStructures.LogicQueue;
+import domain.GraphRoad;
 
 public class Car implements Runnable {
-	private final GridPane gridPane;
-	private final int gridSize;
-	private final int n; // tamaño del patrón de carreteras
-	private int currentRow, currentCol;
+    private final GridPane gridPane;
+    private final int gridSize;
+    private final int n; // tamaño del patrón de carreteras
+    private int currentRow, currentCol;
+    private int prevRow, prevCol;
+    private final Graph graph;
 	private volatile boolean running = true;
 	private final Random rand = new Random();
 	private Button currentButton;
 	private static int carCounter = 0;
 	private final int carId;
-	private Button previousButton;
+    private Button previousButton;
 
-	public Car(GridPane gridPane, int n) {
-		this.gridPane = gridPane;
-		this.n = n;
-		this.gridSize = n * n + n + 1;
-		this.carId = ++carCounter;
+    public Car(GridPane gridPane, int n, Graph graph) {
+        this.gridPane = gridPane;
+        this.n = n;
+        this.gridSize = n * n + n + 1;
+        this.graph = graph;
+        this.carId = ++carCounter;
 
-		findInitialPosition();
-		highlightCurrentPosition();
-	}
+        findInitialPosition();
+        highlightCurrentPosition();
+    }
 
-	private void findInitialPosition() {
+        private void findInitialPosition() {
                 RoadList validPositions = new RoadList();
 
 		for (int row = 0; row < gridSize; row++) {
@@ -48,7 +55,14 @@ public class Car implements Runnable {
                         NodeRoad initialPos = LogicRoadList.getAt(validPositions, index);
                         currentRow = initialPos.getI();
                         currentCol = initialPos.getJ();
+                        prevRow = currentRow;
+                        prevCol = currentCol;
                         currentButton = getButtonAt(currentRow, currentCol);
+
+                        NodeV node = GraphRoad.getNodeAt(currentRow, currentCol);
+                        if (node != null) {
+                                LogicQueue.add(carId, node.getCars());
+                        }
                 }
         }
 
@@ -78,29 +92,52 @@ public class Car implements Runnable {
         private RoadList getValidNeighbors() {
                 RoadList neighbors = new RoadList();
 
-		int[][] directions = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+                NodeV node = GraphRoad.getNodeAt(currentRow, currentCol);
+                if (node != null) {
+                        NodeRoad x = node.getxRoads().getFirst();
+                        if (x != null) {
+                                LogicRoadList.add(x.getI(), x.getJ(), neighbors);
+                        }
+                        NodeRoad y = node.getyRoads().getFirst();
+                        if (y != null) {
+                                LogicRoadList.add(y.getI(), y.getJ(), neighbors);
+                        }
+                } else {
+                        NodeRoad next = getNextStraight();
+                        if (next != null) {
+                                LogicRoadList.add(next.getI(), next.getJ(), neighbors);
+                        }
+                }
 
-		for (int[] dir : directions) {
-			int newRow = currentRow + dir[0];
-			int newCol = currentCol + dir[1];
+                return neighbors;
+        }
 
-			if (newRow >= 0 && newRow < gridSize && newCol >= 0 && newCol < gridSize) {
-                                if (isRoad(newRow, newCol) && getButtonAt(newRow, newCol) != null) {
-                                        LogicRoadList.add(newRow, newCol, neighbors);
-                                }
-			}
-		}
+        private NodeRoad getNextStraight() {
+                int dRow = currentRow - prevRow;
+                int dCol = currentCol - prevCol;
+                int newRow = currentRow + dRow;
+                int newCol = currentCol + dCol;
 
-		return neighbors;
-	}
+                if (dRow == 0 && dCol == 0) {
+                        return null;
+                }
+
+                if (newRow >= 0 && newRow < gridSize && newCol >= 0 && newCol < gridSize) {
+                        if (isRoad(newRow, newCol) && getButtonAt(newRow, newCol) != null) {
+                                return new NodeRoad(newRow, newCol);
+                        }
+                }
+
+                return null;
+        }
 
 	public void stop() {
 		running = false;
 	}
 
-	@Override
-	public void run() {
-		while (running) {
+        @Override
+        public void run() {
+                while (running) {
                         RoadList validNeighbors = getValidNeighbors();
 
                         if (LogicRoadList.isEmpty(validNeighbors)) {
@@ -111,13 +148,26 @@ public class Car implements Runnable {
                         int index = rand.nextInt(LogicRoadList.size(validNeighbors));
                         NodeRoad nextPos = LogicRoadList.getAt(validNeighbors, index);
 
-			clearCurrentPosition();
+                        NodeV prevVertex = GraphRoad.getNodeAt(currentRow, currentCol);
+                        NodeV nextVertex = GraphRoad.getNodeAt(nextPos.getI(), nextPos.getJ());
 
+                        if (prevVertex != null) {
+                                LogicQueue.pop(prevVertex.getCars());
+                        }
+
+                        clearCurrentPosition();
+
+                        prevRow = currentRow;
+                        prevCol = currentCol;
                         currentRow = nextPos.getI();
                         currentCol = nextPos.getJ();
-			currentButton = getButtonAt(currentRow, currentCol);
+                        currentButton = getButtonAt(currentRow, currentCol);
 
-			highlightCurrentPosition();
+                        if (nextVertex != null) {
+                                LogicQueue.add(carId, nextVertex.getCars());
+                        }
+
+                        highlightCurrentPosition();
 
 			try {
 				Thread.sleep(500);
