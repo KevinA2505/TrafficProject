@@ -1,11 +1,14 @@
 package domain;
 
 import LogicStructures.LogicQueue;
+import LogicStructures.LogicRoadList;
 import Nodes.Node;
 import Nodes.NodeE;
+import Nodes.NodeRoad;
 import Nodes.NodeV;
 import Nodes.NodeVertex;
 import Structures.Graph;
+import Structures.RoadList;
 
 public class Car implements Runnable {
 
@@ -21,49 +24,85 @@ public class Car implements Runnable {
 		this.destination = destination;
 	}
 
-	@Override
-	public void run() {
-		Graph g = GraphRoad.getGraph();
-		if (g == null)
-			return;
+        @Override
+        public void run() {
+                Graph g = GraphRoad.getGraph();
+                if (g == null)
+                        return;
 
-		while (true) {
-			int[] path = Dijkstra.buildPath(origin.getData(), destination.getData(), g);
+                while (true) {
+                        int[] path = Dijkstra.buildPath(origin.getData(), destination.getData(), g);
 
-			for (int i = 0; i < path.length; i++) {
-				NodeV node = findNode(path[i], g);
-				if (node == null)
-					continue;
+                        for (int i = 0; i < path.length; i++) {
+                                NodeV node = findNode(path[i], g);
+                                if (node == null)
+                                        continue;
 
-				System.out.println(this + " -> " + toCoord(node.getData()));
-				LogicQueue.add(this, node.getCars());
+                                System.out.println(this + " -> " + toCoord(node.getData()));
+                                LogicQueue.add(this, node.getCars());
 
-				long delay = 0;
-				if (i < path.length - 1) {
-					NodeV next = findNode(path[i + 1], g);
-					NodeE edge = findEdge(node, next);
-					if (edge != null) {
-						delay = (long) edge.getWeight() * VELOCITY_STANDARD;
-					}
-				}
+                                long totalDelay = 0;
+                                RoadList rList = null;
+                                if (i < path.length - 1) {
+                                        NodeV next = findNode(path[i + 1], g);
+                                        NodeE edge = findEdge(node, next);
+                                        if (edge != null) {
+                                                totalDelay = (long) edge.getWeight() * VELOCITY_STANDARD;
+                                        }
+                                        rList = selectRoadList(node, next);
+                                }
 
-				try {
-					Thread.sleep(delay);
-				} catch (InterruptedException e) {
-					Thread.currentThread().interrupt();
-					return;
-				}
+                                if (rList != null && !LogicRoadList.isEmpty(rList)) {
+                                        int steps = LogicRoadList.size(rList) + 1;
+                                        long stepDelay = (steps > 0) ? totalDelay / steps : totalDelay;
+                                        NodeRoad cursor = rList.getFirst();
+                                        while (cursor != null) {
+                                                try {
+                                                        Thread.sleep(stepDelay);
+                                                } catch (InterruptedException e) {
+                                                        Thread.currentThread().interrupt();
+                                                        return;
+                                                }
+                                                System.out.println(this + " -> (" + cursor.getI() + "," + cursor.getJ() + ")");
+                                                cursor = cursor.getNext();
+                                        }
+                                        try {
+                                                Thread.sleep(stepDelay);
+                                        } catch (InterruptedException e) {
+                                                Thread.currentThread().interrupt();
+                                                return;
+                                        }
+                                } else {
+                                        try {
+                                                Thread.sleep(totalDelay);
+                                        } catch (InterruptedException e) {
+                                                Thread.currentThread().interrupt();
+                                                return;
+                                        }
+                                }
 
-				LogicQueue.pop(node.getCars());
-			}
+                                LogicQueue.pop(node.getCars());
+                        }
 
-			System.out.println("Ruta terminada");
+                        System.out.println("Ruta terminada");
 
-			NodeV temp = origin;
-			origin = destination;
-			destination = temp;
-		}
-	}
+                        NodeV temp = origin;
+                        origin = destination;
+                        destination = temp;
+                }
+        }
+
+        private RoadList selectRoadList(NodeV originV, NodeV destinationV) {
+                int orow = originV.getData() / 1000;
+                int ocol = originV.getData() % 1000;
+                int drow = destinationV.getData() / 1000;
+                int dcol = destinationV.getData() % 1000;
+                if (orow == drow)
+                        return originV.getxRoads();
+                if (ocol == dcol)
+                        return originV.getyRoads();
+                return null;
+        }
 
 	private NodeV findNode(int data, Graph g) {
 		if (g.getVertices() == null)
