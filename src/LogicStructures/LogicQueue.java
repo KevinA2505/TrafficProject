@@ -36,10 +36,10 @@ public class LogicQueue {
 		queue.setFirst(queue.getFirst().getNext());
 	}
 	
-	public static String print(Queue queue) {
-		if(isEmpty(queue)) {
-			return null;
-		}
+        public static String print(Queue queue) {
+                if(isEmpty(queue)) {
+                        return null;
+                }
 		String text = "";
 		QueueNode temp = queue.getFirst();
 		
@@ -54,6 +54,16 @@ public class LogicQueue {
                         }
                         temp = temp.getNext();
                 } while (temp != null);
-		return text;
-	}
+                return text;
+        }
+
+        public static int size(Queue queue) {
+                int count = 0;
+                QueueNode temp = queue.getFirst();
+                while (temp != null) {
+                        count++;
+                        temp = temp.getNext();
+                }
+                return count;
+        }
 }

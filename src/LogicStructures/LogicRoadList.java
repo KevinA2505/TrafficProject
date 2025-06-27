@@ -61,10 +61,10 @@ public class LogicRoadList {
 		}
 	}
 
-	public static String printList(RoadList roadList) {
-		if (isEmpty(roadList)) {
-			return "";
-		}
+        public static String printList(RoadList roadList) {
+                if (isEmpty(roadList)) {
+                        return "";
+                }
 
 		NodeRoad temp = roadList.getFirst();
 		StringBuilder text = new StringBuilder();
@@ -77,6 +77,16 @@ public class LogicRoadList {
 			temp = temp.getNext();
 		}
 
-		return text.toString();
-	}
+                return text.toString();
+        }
+
+        public static int size(RoadList roadList) {
+                int count = 0;
+                NodeRoad temp = roadList.getFirst();
+                while (temp != null) {
+                        count++;
+                        temp = temp.getNext();
+                }
+                return count;
+        }
 }
