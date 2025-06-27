@@ -33,7 +33,7 @@ public class Car implements Runnable {
                         System.out.println(this + " -> " + toCoord(node.getData()));
                         LogicQueue.add(this, node.getCars());
                         try {
-                                Thread.sleep(200);
+                                Thread.sleep(2000);
                         } catch (InterruptedException e) {
                                 Thread.currentThread().interrupt();
                         }
