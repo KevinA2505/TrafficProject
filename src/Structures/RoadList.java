@@ -4,12 +4,22 @@ import Nodes.NodeRoad;
 
 public class RoadList {
 
+	private int nameCoord;
 	private NodeRoad first;
 	private NodeRoad last;
 	
-	public RoadList() {
+	public RoadList(int nameCoord) {
+		this.nameCoord = nameCoord;
 		this.first = null;
 		this.last = null;
+	}
+
+	public int getNameCoord() {
+		return nameCoord;
+	}
+
+	public void setNameCoord(int nameCoord) {
+		this.nameCoord = nameCoord;
 	}
 
 	public NodeRoad getFirst() {

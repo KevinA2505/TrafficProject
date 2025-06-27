@@ -15,8 +15,8 @@ public class NodeV {
 	public NodeV(int data) {
 		this.data = data;
 		this.cars = new Queue();
-		this.xRoads = new RoadList();
-		this.yRoads = new RoadList();
+		this.xRoads = new RoadList(data);
+		this.yRoads = new RoadList(data);
 		this.edges = new EdgeList();
 	}
 

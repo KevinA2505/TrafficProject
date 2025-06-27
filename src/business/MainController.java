@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import LogicStructures.LogicEdgeList;
 import LogicStructures.LogicRoadList;
 import LogicStructures.LogicVerticesList;
+import Nodes.NodeRoad;
 import Nodes.NodeV;
 import Nodes.NodeVertex;
 import Structures.EdgeList;
@@ -36,7 +37,7 @@ public class MainController {
 	@FXML
 	private TableView<Incident> tVIncidents;
 	@FXML
-	private TableView<Road> tVCongestedRoads;
+	private TableView<RoadList> tVCongestedRoads;
 	@FXML
 	private Button bEvent;
 	@FXML
