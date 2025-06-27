@@ -81,19 +81,6 @@ public class MainController {
 	// Event Listener on Button[#bGenerateCar].onAction
 	@FXML
 	public void toAddCar(ActionEvent event) {
-		if (grid != null) {
-			try {
-				Car car = new Car(grid, sSize.getValue());
-
-				Thread carThread = new Thread(car);
-				carThread.setDaemon(true);
-				carThread.start();
-
-			} catch (Exception e) {
-				System.err.println("Error in car: " + e.getMessage());
-				e.printStackTrace();
-			}
-		}
 	}
 
 	// Event Listener on Button[#bShowGraph].onAction
