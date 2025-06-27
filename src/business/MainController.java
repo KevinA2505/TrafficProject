@@ -3,6 +3,8 @@ package business;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Button;
+import javafx.scene.Node;
+import javafx.application.Platform;
 import LogicStructures.LogicQueue;
 import LogicStructures.LogicVerticesList;
 import Nodes.NodeVertex;
@@ -43,7 +45,8 @@ public class MainController {
 	@FXML
 	private Button bRoads;
 
-	private GridPane grid;
+    private GridPane grid;
+    private Node lastCarCell;
 
 	@FXML
 	private void initialize() {
@@ -55,18 +58,52 @@ public class MainController {
 		draw();
 	}
 
-	private void draw() {
-		int a = sSize.getValue();
-		GridPane g = RoadsGrid.generateGrid(a);
-		grid = g;
+    private void draw() {
+        int a = sSize.getValue();
+        GridPane g = RoadsGrid.generateGrid(a);
+        grid = g;
 
 		g.prefWidthProperty().bind(pGrid.widthProperty());
 		g.prefHeightProperty().bind(pGrid.heightProperty());
 		g.maxWidthProperty().bind(pGrid.widthProperty());
 		g.maxHeightProperty().bind(pGrid.heightProperty());
 
-		pGrid.getChildren().setAll(g);
-	}
+        pGrid.getChildren().setAll(g);
+    }
+
+    public void updateCarPosition(int row, int col) {
+        if (grid == null) {
+            return;
+        }
+
+        Node target = null;
+        for (Node node : grid.getChildren()) {
+            Integer r = GridPane.getRowIndex(node);
+            if (r == null)
+                r = 0;
+            Integer c = GridPane.getColumnIndex(node);
+            if (c == null)
+                c = 0;
+            if (r == row && c == col) {
+                target = node;
+                break;
+            }
+        }
+
+        if (target == null)
+            return;
+
+        final Node btn = target;
+        Platform.runLater(() -> {
+            if (lastCarCell != null && lastCarCell instanceof Button) {
+                ((Button) lastCarCell).setStyle("");
+            }
+            if (btn instanceof Button) {
+                ((Button) btn).setStyle("-fx-background-color: red;");
+            }
+            lastCarCell = btn;
+        });
+    }
 
 	// Event Listener on Button[#bEvent].onAction
 	@FXML
@@ -110,7 +147,7 @@ public class MainController {
             if (startVertex == null || endVertex == null)
                     return;
 
-            Car car = new Car(startVertex.getNodeV(), endVertex.getNodeV());
+            Car car = new Car(startVertex.getNodeV(), endVertex.getNodeV(), this);
 
             LogicQueue.add(car, startVertex.getNodeV().getCars());
 
