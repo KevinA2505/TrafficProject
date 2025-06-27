@@ -59,9 +59,9 @@ public class Car implements Runnable {
 
 			System.out.println("Ruta terminada");
 
-			int temp = origin.getData();
-			origin.setData(destination.getData());
-			destination.setData(temp);
+			NodeV temp = origin;
+			origin = destination;
+			destination = temp;
 		}
 	}
 
