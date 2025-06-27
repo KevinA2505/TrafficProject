@@ -5,9 +5,12 @@ import Nodes.Node;
 import Nodes.NodeE;
 import Nodes.NodeV;
 import Nodes.NodeVertex;
+import Nodes.NodeInt;
 import Structures.EdgeList;
 import Structures.Graph;
+import Structures.IntList;
 import Structures.VerticesList;
+import LogicStructures.LogicIntList;
 
 public final class Dijkstra {
 
@@ -128,18 +131,20 @@ public final class Dijkstra {
 			return new int[0];
 		}
 
-		java.util.List<Integer> pathList = new java.util.ArrayList<>();
-		int current = dst;
+                IntList pathList = new IntList();
+                int current = dst;
 
-		while (current != -1) {
-			pathList.add(nodes[current].getData());
-			current = prev[current];
-		}
+                while (current != -1) {
+                        LogicIntList.add(nodes[current].getData(), pathList);
+                        current = prev[current];
+                }
 
-		int[] path = new int[pathList.size()];
-		for (int i = 0; i < path.length; i++) {
-			path[i] = pathList.get(pathList.size() - 1 - i);
-		}
+                int size = LogicIntList.size(pathList);
+                int[] path = new int[size];
+                for (int i = 0; i < path.length; i++) {
+                        NodeInt node = LogicIntList.getAt(pathList, size - 1 - i);
+                        path[i] = node.getData();
+                }
 
 		return path;
 	}

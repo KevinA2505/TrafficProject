@@ -5,9 +5,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
+import Structures.RoadList;
+import Nodes.NodeRoad;
+import LogicStructures.LogicRoadList;
 
 public class Car implements Runnable {
 	private final GridPane gridPane;
@@ -32,23 +33,24 @@ public class Car implements Runnable {
 	}
 
 	private void findInitialPosition() {
-		List<int[]> validPositions = new ArrayList<>();
+                RoadList validPositions = new RoadList();
 
 		for (int row = 0; row < gridSize; row++) {
 			for (int col = 0; col < gridSize; col++) {
-				if (isRoad(row, col) && getButtonAt(row, col) != null) {
-					validPositions.add(new int[] { row, col });
-				}
+                                if (isRoad(row, col) && getButtonAt(row, col) != null) {
+                                        LogicRoadList.add(row, col, validPositions);
+                                }
 			}
 		}
 
-		if (!validPositions.isEmpty()) {
-			int[] initialPos = validPositions.get(rand.nextInt(validPositions.size()));
-			currentRow = initialPos[0];
-			currentCol = initialPos[1];
-			currentButton = getButtonAt(currentRow, currentCol);
-		}
-	}
+                if (!LogicRoadList.isEmpty(validPositions)) {
+                        int index = rand.nextInt(LogicRoadList.size(validPositions));
+                        NodeRoad initialPos = LogicRoadList.getAt(validPositions, index);
+                        currentRow = initialPos.getI();
+                        currentCol = initialPos.getJ();
+                        currentButton = getButtonAt(currentRow, currentCol);
+                }
+        }
 
 	private boolean isRoad(int row, int col) {
 		return isH(row) || isV(col);
@@ -73,8 +75,8 @@ public class Car implements Runnable {
 		return null;
 	}
 
-	private List<int[]> getValidNeighbors() {
-		List<int[]> neighbors = new ArrayList<>();
+        private RoadList getValidNeighbors() {
+                RoadList neighbors = new RoadList();
 
 		int[][] directions = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
 
@@ -83,9 +85,9 @@ public class Car implements Runnable {
 			int newCol = currentCol + dir[1];
 
 			if (newRow >= 0 && newRow < gridSize && newCol >= 0 && newCol < gridSize) {
-				if (isRoad(newRow, newCol) && getButtonAt(newRow, newCol) != null) {
-					neighbors.add(new int[] { newRow, newCol });
-				}
+                                if (isRoad(newRow, newCol) && getButtonAt(newRow, newCol) != null) {
+                                        LogicRoadList.add(newRow, newCol, neighbors);
+                                }
 			}
 		}
 
@@ -99,19 +101,20 @@ public class Car implements Runnable {
 	@Override
 	public void run() {
 		while (running) {
-			List<int[]> validNeighbors = getValidNeighbors();
+                        RoadList validNeighbors = getValidNeighbors();
 
-			if (validNeighbors.isEmpty()) {
-				findInitialPosition();
-				continue;
-			}
+                        if (LogicRoadList.isEmpty(validNeighbors)) {
+                                findInitialPosition();
+                                continue;
+                        }
 
-			int[] nextPos = validNeighbors.get(rand.nextInt(validNeighbors.size()));
+                        int index = rand.nextInt(LogicRoadList.size(validNeighbors));
+                        NodeRoad nextPos = LogicRoadList.getAt(validNeighbors, index);
 
 			clearCurrentPosition();
 
-			currentRow = nextPos[0];
-			currentCol = nextPos[1];
+                        currentRow = nextPos.getI();
+                        currentCol = nextPos.getJ();
 			currentButton = getButtonAt(currentRow, currentCol);
 
 			highlightCurrentPosition();
