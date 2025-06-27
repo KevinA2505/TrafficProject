@@ -1,0 +1,237 @@
+[33mcommit dbf5a7d1c2df84a06fa0c1ebc458bcdcb6e4f0df[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mPrint[m[33m, [m[1;31morigin/Print[m[33m)[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 17:20:50 2025 -0600
+
+    Pequeños cambios en el orden
+
+[33mcommit 25217eb2598993cc2eff412fbf1c0561a1f7c62e[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 17:08:25 2025 -0600
+
+    Limpieza de Car
+
+[33mcommit 6b6b1210ba6831138db992513c950c90f03a90fd[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 16:59:22 2025 -0600
+
+    Limpieza del MainController
+
+[33mcommit 5fa61a5594a6eb5a9d96ab2c140b93c6277bc4ad[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 16:55:50 2025 -0600
+
+    Corregi error en compatibilidad
+
+[33mcommit 63abee240ed2745e895f0713d008a7b833c00187[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 16:53:04 2025 -0600
+
+    null
+
+[33mcommit ba27883696a107b616c5b803f9d96a9360cea3e6[m
+Merge: e3a0f89 99f8240
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 16:51:13 2025 -0600
+
+    null
+
+[33mcommit e3a0f8979ceffdce98dae924536fb01716f4c5f1[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 16:50:11 2025 -0600
+
+    null
+
+[33mcommit 99f8240fbfb0291271b21eaa48c340a3731d7bfd[m
+Merge: 3b571a2 5b4bd87
+Author: KevinA2505 <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 16:49:50 2025 -0600
+
+    Merge pull request #15 from KevinA2505/codex/modificar-maincontroller-y-actualizar-car
+    
+    Implement car movement highlighting
+
+[33mcommit 5b4bd870eed67d4d2101a573727652701c43535e[m
+Author: KevinA2505 <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 16:49:25 2025 -0600
+
+    Add car position tracking in UI
+
+[33mcommit 3b571a2760fe9c32ff352c1f7e0154678cea2b39[m
+Merge: 6c828b9 1f7a0b2
+Author: KevinA2505 <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 16:34:41 2025 -0600
+
+    Merge pull request #14 from KevinA2505/codex/explicar-el-movimiento-de-car-en-el-grafo
+    
+    Movimiento calculado en las RoadList de NodeV
+
+[33mcommit 1f7a0b2dadf2245f1935b208c880eaa4bc38035f[m
+Author: KevinA2505 <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 16:34:15 2025 -0600
+
+    Add stepwise car movement using RoadList
+
+[33mcommit 6c828b96b7a295c838fd7d29d3eaeda94752e308[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 15:46:52 2025 -0600
+
+    He cambiado la lógica despues de ruta terminada para que establezca una nueva dirección. En Car.java
+
+[33mcommit f9a84ccda1e2fc01d8b00b20fdbf1dc3b6f13f26[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 15:39:27 2025 -0600
+
+    Random customize
+
+[33mcommit f3a00bda8ad77b317f9ca349ad8ddef6eeb87d31[m
+Merge: c5e75e9 c962bd4
+Author: KevinA2505 <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 15:36:38 2025 -0600
+
+    Merge pull request #13 from KevinA2505/codex/modificar-toaddcar-para-usar-índices-aleatorios
+    
+    random origen y destino
+
+[33mcommit c5e75e9d83d01bb8b688e61bbba8fd9f28e9f683[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 15:36:14 2025 -0600
+
+    Car update
+
+[33mcommit c962bd405d0134ebf951c7834c1e02effebc2f86[m
+Author: KevinA2505 <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 15:35:51 2025 -0600
+
+    Select random origin and destination vertices
+
+[33mcommit 3a155c0d7c6e9a3369347762cd5651c1f9691324[m
+Merge: ab26ed2 2c19e4d
+Author: KevinA2505 <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 14:58:45 2025 -0600
+
+    Merge pull request #12 from KevinA2505/codex/agregar-constante-velocity_standard-para-cálculo-de-sleep
+    
+    Se ha añadido una constante para calcular la velocidad y así poder establecer un sleep.
+
+[33mcommit 2c19e4d858c09ae9e1bf6b4a7d60d7adb024267c[m
+Author: KevinA2505 <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 14:58:05 2025 -0600
+
+    Add VELOCITY_STANDARD constant and edge-based delay
+
+[33mcommit ab26ed2e5e5f5cb5d1ef9c6c90038cf546c99332[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 14:50:03 2025 -0600
+
+    Sleep de 200 a 2000
+
+[33mcommit a130d2295b29948a8354641a07be5497b2679095[m
+Merge: 6e83bc9 1cb2c7c
+Author: KevinA2505 <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 14:39:25 2025 -0600
+
+    Merge pull request #11 from KevinA2505/codex/imprimir-movimiento-de-car-en-consola
+    
+    Imprime movimiento del Car en consola
+
+[33mcommit 1cb2c7cfd1fd2a9961edb0299b10219bf6790537[m
+Author: KevinA2505 <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 14:39:11 2025 -0600
+
+    Imprimir movimiento del Car en consola
+
+[33mcommit 6e83bc9a8a71da839bcdcfb4ce0b070f7966776f[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 14:32:21 2025 -0600
+
+    Se ha generado la lógica primitiva de toAddCar
+
+[33mcommit a2dbfd4fe24e2aa25f2c9187091c660fd65baddf[m
+Merge: 3053a17 0142c6b
+Author: KevinA2505 <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 14:28:58 2025 -0600
+
+    Merge pull request #9 from KevinA2505/codex/implement-runnable-interface-in-car.java
+    
+    Se ha implementado una nueva primera version de Car que implementa Runnable para la generación de Hilos de tipo Car
+
+[33mcommit 0142c6b7c1437bee57059239fbca9089b0fa1af1[m
+Author: KevinA2505 <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 14:28:13 2025 -0600
+
+    Implement Car runnable
+
+[33mcommit 3053a173a1eb30e72e9829ecaf245553a2b309ed[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 13:54:47 2025 -0600
+
+    Delete Road.java. Clean RoadLister
+
+[33mcommit 4d78a1ba0df287cfc1a1957d88e65439b548be6a[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 13:52:42 2025 -0600
+
+    logicRoadList altered
+
+[33mcommit 8e94d3d6a52d9e419931733b8ef2b78c08fcb85c[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 13:51:03 2025 -0600
+
+    He adaptado Queue de int a Car
+
+[33mcommit 966f9eb79dc737a94c521810b3fd3703716dd46c[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 13:36:05 2025 -0600
+
+    Car added again.
+
+[33mcommit 55a9732092a6e46a5064e2a01d54693edb4b9f34[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 13:28:33 2025 -0600
+
+    He removido la lógica de toAddCar
+
+[33mcommit befdc549d46a60fdec2c1dda26f58df754ce2026[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 13:27:47 2025 -0600
+
+    Car remove
+
+[33mcommit f2128cf9135017536c5c6203d62d9198333093ec[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 13:17:26 2025 -0600
+
+    He generado un cambio en MainController para usar RoadListe en la tabla tVCongestedRoads con el fin de mostrar en un futuro las calles más lenas. He cambiado el objeto RoadList para que incluya data de NodeV con el fin de tener una identidad proveniente de NodeV.
+
+[33mcommit cb7973ce5da42bdd07a57a4d2a8b15051bbd884b[m
+Author: Kevin Vargas Miranda <kevinandresvm2505@gmail.com>
+Date:   Fri Jun 27 09:39:40 2025 -0600
+
+    IntList
+
+[33mcommit 4ac9e808d1715aa8e217c3470568c0a832d2236e[m
+Merge: 0d25939 d6d0b79
+Author: KevinA2505 <kevinandresvm2505@gmail.com>
+Date:   Thu Jun 26 22:11:24 2025 -0600
+
+    Merge pull request #6 from KevinA2505/codex/generar-readme-en-español
+    
+    Add Spanish README
+
+[33mcommit d6d0b797b6a67c00e5003636e37497ec170e50a3[m[33m ([m[1;31morigin/codex/generar-readme-en-español[m[33m)[m
+Author: KevinA2505 <kevinandresvm2505@gmail.com>
+Date:   Thu Jun 26 22:10:29 2025 -0600
+
+    Agrega README en español
+
+[33mcommit 0d2593989662368c2a89f9b912eeb78e9aa44eac[m
+Merge: 2bb1cb9 8f487c5
+Author: KevinA2505 <kevinandresvm2505@gmail.com>
+Date:   Thu Jun 26 21:40:36 2025 -0600
+
+    Merge pull request #5 from KevinA2505/codex/revisar-funcionamiento-del-objeto
+    
+    Remover la lista de util.List. Evita usar estructuras de librerías de java.
+
+[33mcommit 8f487c584bcc16b31530540bc4d1659cbe510d54[m[33m ([m[1;31morigin/codex/revisar-funcionamiento-del-objeto[m[33m)[m
+Author: KevinA2505 <kevinandresvm
