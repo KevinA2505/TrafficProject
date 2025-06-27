@@ -25,20 +25,21 @@ public class Car implements Runnable {
 			return;
 
 		int[] path = Dijkstra.buildPath(origin.getData(), destination.getData(), g);
-		for (int vId : path) {
-			NodeV node = findNode(vId, g);
-			if (node == null)
-				continue;
+                for (int vId : path) {
+                        NodeV node = findNode(vId, g);
+                        if (node == null)
+                                continue;
 
-			LogicQueue.add(this, node.getCars());
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-			}
-			LogicQueue.pop(node.getCars());
-		}
-	}
+                        System.out.println(this + " -> " + toCoord(node.getData()));
+                        LogicQueue.add(this, node.getCars());
+                        try {
+                                Thread.sleep(200);
+                        } catch (InterruptedException e) {
+                                Thread.currentThread().interrupt();
+                        }
+                        LogicQueue.pop(node.getCars());
+                }
+        }
 
 	private NodeV findNode(int data, Graph g) {
 		if (g.getVertices() == null)
@@ -62,10 +63,16 @@ public class Car implements Runnable {
 
 	public NodeV getDestination() {
 		return destination;
-	}
+        }
 
-	@Override
-	public String toString() {
-		return "Car " + id;
-	}
+        @Override
+        public String toString() {
+                return "Car " + id;
+        }
+
+        private static String toCoord(int id) {
+                int row = id / 1000;
+                int col = id % 1000;
+                return "(" + row + "," + col + ")";
+        }
 }
