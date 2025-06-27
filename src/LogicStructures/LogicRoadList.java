@@ -2,7 +2,6 @@ package LogicStructures;
 
 import Nodes.NodeRoad;
 import Structures.RoadList;
-import javafx.scene.control.Button;
 
 public class LogicRoadList {
 
