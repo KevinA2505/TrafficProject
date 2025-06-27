@@ -8,6 +8,11 @@ import javafx.scene.layout.GridPane;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import Nodes.NodeV;
+import LogicStructures.LogicQueue;
+import domain.GraphRoad;
 
 public class Car implements Runnable {
 	private final GridPane gridPane;
@@ -16,19 +21,21 @@ public class Car implements Runnable {
 	private int currentRow, currentCol;
 	private volatile boolean running = true;
 	private final Random rand = new Random();
-	private Button currentButton;
-	private static int carCounter = 0;
-	private final int carId;
-	private Button previousButton;
+        private Button currentButton;
+        private static final AtomicInteger carCounter = new AtomicInteger(0);
+        private final int carId;
+        private Button previousButton;
+        private NodeV currentVertex;
 
 	public Car(GridPane gridPane, int n) {
 		this.gridPane = gridPane;
 		this.n = n;
-		this.gridSize = n * n + n + 1;
-		this.carId = ++carCounter;
+                this.gridSize = n * n + n + 1;
+                this.carId = carCounter.incrementAndGet();
 
-		findInitialPosition();
-		highlightCurrentPosition();
+                findInitialPosition();
+                highlightCurrentPosition();
+                registerAtVertex(currentRow, currentCol);
 	}
 
 	private void findInitialPosition() {
@@ -92,9 +99,28 @@ public class Car implements Runnable {
 		return neighbors;
 	}
 
-	public void stop() {
-		running = false;
-	}
+        public void stop() {
+                running = false;
+        }
+
+        private void registerAtVertex(int row, int col) {
+                if (shouldCreateVertex(row, col)) {
+                        NodeV v = GraphRoad.getVertex(row, col);
+                        if (v != null) {
+                                LogicQueue.add(this, v.getCars());
+                        }
+                        currentVertex = v;
+                } else {
+                        currentVertex = null;
+                }
+        }
+
+        private void leaveCurrentVertex() {
+                if (currentVertex != null) {
+                        LogicQueue.pop(currentVertex.getCars());
+                        currentVertex = null;
+                }
+        }
 
 	@Override
 	public void run() {
@@ -106,15 +132,17 @@ public class Car implements Runnable {
 				continue;
 			}
 
-			int[] nextPos = validNeighbors.get(rand.nextInt(validNeighbors.size()));
+                        int[] nextPos = validNeighbors.get(rand.nextInt(validNeighbors.size()));
 
-			clearCurrentPosition();
+                        leaveCurrentVertex();
+                        clearCurrentPosition();
 
 			currentRow = nextPos[0];
 			currentCol = nextPos[1];
-			currentButton = getButtonAt(currentRow, currentCol);
+                        currentButton = getButtonAt(currentRow, currentCol);
 
-			highlightCurrentPosition();
+                        highlightCurrentPosition();
+                        registerAtVertex(currentRow, currentCol);
 
 			try {
 				Thread.sleep(500);
@@ -124,8 +152,9 @@ public class Car implements Runnable {
 			}
 		}
 
-		clearCurrentPosition();
-	}
+                leaveCurrentVertex();
+                clearCurrentPosition();
+        }
 
 	private void highlightCurrentPosition() {
 		if (currentButton != null) {
