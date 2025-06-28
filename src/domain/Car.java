@@ -36,6 +36,9 @@ public class Car implements Runnable {
 		while (true) {
 			int[] path = Dijkstra.buildPath(origin.getData(), destination.getData(), g);
 
+			/*
+			 * Esto es para saber la ruta del car desde un inicio
+			 */
 			System.out.print("Ruta Dijkstra: ");
 			for (int i = 0; i < path.length; i++) {
 				System.out.print(path[i]);
@@ -61,14 +64,22 @@ public class Car implements Runnable {
 					next = findNode(path[i + 1], g);
 					NodeE edge = findEdge(node, next);
 					if (edge != null) {
+						/*
+						 * calculo para incluir la costante de velocidad
+						 */
 						totalDelay = (int) edge.getWeight() * VELOCITY_STANDARD;
 					}
 					rList = selectRoadList(node, next);
 				}
 
+				/*
+				 * Aqui dividimos el step para establecer un recorrido diferente en tramos
+				 * Se calcula basandose en el weight de la arista
+				 * Divide por el tamaaño de la lista.
+				 */
 				if (rList != null && !LogicRoadList.isEmpty(rList)) {
 					int steps = LogicRoadList.size(rList) + 1;
-					long stepDelay = (steps > 0) ? totalDelay / steps : totalDelay;
+					int stepDelay = (steps > 0) ? totalDelay / steps : totalDelay;
 					NodeRoad cursor = rList.getFirst();
 					while (cursor != null) {
 						if (controller != null) {
