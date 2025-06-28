@@ -18,19 +18,29 @@ Este proyecto es una aplicación escrita en **Java** que utiliza **JavaFX** para
 
 ## Compilación y ejecución
 
-Este proyecto se desarrolló con Java 17 y requiere las librerías de **JavaFX**. Para compilarlo de forma manual se puede ejecutar:
+Este proyecto se desarrolló con Java 17 y requiere las librerías de **JavaFX**. Si
+se intenta ejecutar la aplicación sin compilarla como módulo, la JVM mostrará
+el error `Module Algoritmo_Project_2_v2 not found`. Compílalo de la siguiente
+forma:
 
 ```bash
-javac -d bin -cp "ruta/a/javafx/lib/*" $(find src -name '*.java')
+javac \
+  --module-path "ruta/a/javafx/lib" \
+  --add-modules javafx.controls,javafx.fxml \
+  -d bin $(find src -name '*.java')
 ```
 
-Y para iniciar la aplicación:
+Y para iniciar la aplicación utiliza también el `--module-path`:
 
 ```bash
-java -cp "bin:ruta/a/javafx/lib/*" business.Main
+java \
+  --module-path "ruta/a/javafx/lib:bin" \
+  --add-modules javafx.controls,javafx.fxml \
+  -m Algoritmo_Project_2_v2/business.Main
 ```
 
-Ajusta `ruta/a/javafx/lib` a la ubicación donde tengas instaladas las librerías de JavaFX en tu sistema.
+Ajusta `ruta/a/javafx/lib` a la ubicación donde tengas instaladas las librerías
+de JavaFX en tu sistema.
 
 ## Estado actual
 
