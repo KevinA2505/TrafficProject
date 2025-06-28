@@ -13,14 +13,14 @@ import business.MainController;
 
 public class Car implements Runnable {
 
-        private static int counter = 0;
-        private static final int VELOCITY_STANDARD = 1000;
-        private final int id;
-        private NodeV origin;
-        private NodeV destination;
-        private MainController controller;
-        private int lastRow = -1;
-        private int lastCol = -1;
+	private static int counter = 0;
+	private static final int VELOCITY_STANDARD = 1000;
+	private final int id;
+	private NodeV origin;
+	private NodeV destination;
+	private MainController controller;
+	private int lastRow = -1;
+	private int lastCol = -1;
 
 	public Car(NodeV origin, NodeV destination, MainController controller) {
 		this.id = ++counter;
@@ -38,11 +38,12 @@ public class Car implements Runnable {
 
 			System.out.print("Ruta Dijkstra: ");
 			for (int i = 0; i < path.length; i++) {
-			    System.out.print(path[i]);
-			    if (i < path.length - 1) System.out.print(" -> ");
+				System.out.print(path[i]);
+				if (i < path.length - 1)
+					System.out.print(" -> ");
 			}
 			System.out.println();
-			
+
 			for (int i = 0; i < path.length; i++) {
 				NodeV node = findNode(path[i], g);
 
@@ -68,13 +69,13 @@ public class Car implements Runnable {
 				if (rList != null && !LogicRoadList.isEmpty(rList)) {
 					int steps = LogicRoadList.size(rList) + 1;
 					long stepDelay = (steps > 0) ? totalDelay / steps : totalDelay;
-                                        NodeRoad cursor = rList.getFirst();
-                                        while (cursor != null) {
-                                                if (controller != null) {
-                                                        controller.updateCarPosition(lastRow, lastCol, cursor.getI(), cursor.getJ());
-                                                        lastRow = cursor.getI();
-                                                        lastCol = cursor.getJ();
-                                                }
+					NodeRoad cursor = rList.getFirst();
+					while (cursor != null) {
+						if (controller != null) {
+							controller.updateCarPosition(lastRow, lastCol, cursor.getI(), cursor.getJ());
+							lastRow = cursor.getI();
+							lastCol = cursor.getJ();
+						}
 						try {
 							Thread.sleep(stepDelay);
 						} catch (InterruptedException e) {
@@ -85,13 +86,13 @@ public class Car implements Runnable {
 						cursor = cursor.getNext();
 					}
 
-                                        if (next != null && controller != null) {
-                                                int nrow = next.getData() / 1000;
-                                                int ncol = next.getData() % 1000;
-                                                controller.updateCarPosition(lastRow, lastCol, nrow, ncol);
-                                                lastRow = nrow;
-                                                lastCol = ncol;
-                                        }
+					if (next != null && controller != null) {
+						int nrow = next.getData() / 1000;
+						int ncol = next.getData() % 1000;
+						controller.updateCarPosition(lastRow, lastCol, nrow, ncol);
+						lastRow = nrow;
+						lastCol = ncol;
+					}
 					try {
 						Thread.sleep(stepDelay);
 					} catch (InterruptedException e) {
@@ -100,13 +101,13 @@ public class Car implements Runnable {
 					}
 				} else {
 
-                                        if (i < path.length - 1 && next != null && controller != null) {
-                                                int nrow = next.getData() / 1000;
-                                                int ncol = next.getData() % 1000;
-                                                controller.updateCarPosition(lastRow, lastCol, nrow, ncol);
-                                                lastRow = nrow;
-                                                lastCol = ncol;
-                                        }
+					if (i < path.length - 1 && next != null && controller != null) {
+						int nrow = next.getData() / 1000;
+						int ncol = next.getData() % 1000;
+						controller.updateCarPosition(lastRow, lastCol, nrow, ncol);
+						lastRow = nrow;
+						lastCol = ncol;
+					}
 					try {
 						Thread.sleep(totalDelay);
 					} catch (InterruptedException e) {
