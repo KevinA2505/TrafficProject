@@ -46,7 +46,6 @@ public class MainController {
 	private Button bRoads;
 
 	private GridPane grid;
-	private Node lastCarCell;
 
 	@FXML
 	private void initialize() {
@@ -71,11 +70,12 @@ public class MainController {
 		pGrid.getChildren().setAll(g);
 	}
 
-	public void updateCarPosition(int row, int col) {
+	public void updateCarPosition(int prevRow, int prevCol, int row, int col) {
 		if (grid == null) {
 			return;
 		}
 
+		Node prevTarget = null;
 		Node target = null;
 		for (Node node : grid.getChildren()) {
 			Integer r = GridPane.getRowIndex(node);
@@ -84,24 +84,23 @@ public class MainController {
 			Integer c = GridPane.getColumnIndex(node);
 			if (c == null)
 				c = 0;
+			if (prevRow >= 0 && prevCol >= 0 && r == prevRow && c == prevCol) {
+				prevTarget = node;
+			}
 			if (r == row && c == col) {
 				target = node;
-				break;
 			}
 		}
 
-		if (target == null)
-			return;
-
+		final Node pBtn = prevTarget;
 		final Node btn = target;
 		Platform.runLater(() -> {
-			if (lastCarCell != null && lastCarCell instanceof Button) {
-				((Button) lastCarCell).setStyle("");
+			if (pBtn != null && pBtn instanceof Button) {
+				((Button) pBtn).setStyle("");
 			}
-			if (btn instanceof Button) {
+			if (btn != null && btn instanceof Button) {
 				((Button) btn).setStyle("-fx-background-color: red;");
 			}
-			lastCarCell = btn;
 		});
 	}
 
@@ -149,7 +148,9 @@ public class MainController {
 
 		LogicQueue.add(car, startV.getNodeV().getCars());
 
-		new Thread(car).start();
+		Thread carThread = new Thread(car);
+		carThread.setDaemon(true);
+		carThread.start();
 	}
 
 	// Event Listener on Button[#bShowGraph].onAction
@@ -158,7 +159,7 @@ public class MainController {
 		GraphRoad.displayGraph();
 
 	}
-	
+
 	// Event Listener on Button[#bRoads].onAction
 	@FXML
 	public void toShowRoads(ActionEvent event) {
