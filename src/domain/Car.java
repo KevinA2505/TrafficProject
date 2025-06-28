@@ -139,13 +139,13 @@ public class Car implements Runnable {
 	}
 
 	private RoadList selectRoadList(NodeV originV, NodeV destinationV) {
-		int orow = originV.getData() / 1000;
-		int ocol = originV.getData() % 1000;
-		int drow = destinationV.getData() / 1000;
-		int dcol = destinationV.getData() % 1000;
-		if (orow == drow)
+		int oRow = originV.getData() / 1000;
+		int oCol = originV.getData() % 1000;
+		int dDow = destinationV.getData() / 1000;
+		int dCol = destinationV.getData() % 1000;
+		if (oRow == dDow)
 			return originV.getxRoads();
-		if (ocol == dcol)
+		if (oCol == dCol)
 			return originV.getyRoads();
 		return null;
 	}
