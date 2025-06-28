@@ -2,6 +2,7 @@ package domain;
 
 import LogicStructures.LogicQueue;
 import LogicStructures.LogicRoadList;
+import LogicStructures.LogicVerticesList;
 import Nodes.Node;
 import Nodes.NodeE;
 import Nodes.NodeRoad;
@@ -9,7 +10,9 @@ import Nodes.NodeV;
 import Nodes.NodeVertex;
 import Structures.Graph;
 import Structures.RoadList;
+import Structures.VerticesList;
 import business.MainController;
+import java.util.Random;
 
 public class Car implements Runnable {
 
@@ -130,13 +133,12 @@ public class Car implements Runnable {
 				LogicQueue.pop(node.getCars());
 			}
 
-			System.out.println("Ruta terminada");
+                        System.out.println("Ruta terminada");
 
-			NodeV temp = origin;
-			origin = destination;
-			destination = temp;
-		}
-	}
+                        origin = destination;
+                        destination = getRandomDestination(origin, g);
+                }
+        }
 
 	private RoadList selectRoadList(NodeV originV, NodeV destinationV) {
 		int oRow = originV.getData() / 1000;
@@ -192,9 +194,32 @@ public class Car implements Runnable {
 		return "Car " + id;
 	}
 
-	private static String toCoord(int id) {
-		int row = id / 1000;
-		int col = id % 1000;
-		return "(" + row + "," + col + ")";
-	}
+        private static String toCoord(int id) {
+                int row = id / 1000;
+                int col = id % 1000;
+                return "(" + row + "," + col + ")";
+        }
+
+        private NodeV getRandomDestination(NodeV current, Graph g) {
+                VerticesList vList = g.getVertices();
+                if (vList == null)
+                        return current;
+
+                int size = LogicVerticesList.size(vList);
+                if (size <= 1)
+                        return current;
+
+                Random rand = new Random();
+                NodeV dest = current;
+                while (dest == current) {
+                        int index = rand.nextInt(size);
+                        NodeVertex node = vList.getFirst();
+                        for (int i = 0; i < index && node != null; i++) {
+                                node = node.getNext();
+                        }
+                        if (node != null)
+                                dest = node.getNodeV();
+                }
+                return dest;
+        }
 }
