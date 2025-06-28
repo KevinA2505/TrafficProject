@@ -36,11 +36,12 @@ public class Car implements Runnable {
 
 			System.out.print("Ruta Dijkstra: ");
 			for (int i = 0; i < path.length; i++) {
-			    System.out.print(path[i]);
-			    if (i < path.length - 1) System.out.print(" -> ");
+				System.out.print(path[i]);
+				if (i < path.length - 1)
+					System.out.print(" -> ");
 			}
 			System.out.println();
-			
+
 			for (int i = 0; i < path.length; i++) {
 				NodeV node = findNode(path[i], g);
 
