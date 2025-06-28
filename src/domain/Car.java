@@ -73,9 +73,9 @@ public class Car implements Runnable {
 				}
 
 				/*
-				 * Aqui dividimos el step para establecer un recorrido diferente en tramos
-				 * Se calcula basandose en el weight de la arista
-				 * Divide por el tamaaño de la lista.
+				 * Aqui dividimos el step para establecer un recorrido diferente en tramos Se
+				 * calcula basandose en el weight de la arista Divide por el tamaaño de la
+				 * lista.
 				 */
 				if (rList != null && !LogicRoadList.isEmpty(rList)) {
 					int steps = LogicRoadList.size(rList) + 1;
