@@ -149,7 +149,9 @@ public class MainController {
 
 		LogicQueue.add(car, startV.getNodeV().getCars());
 
-		new Thread(car).start();
+		Thread carThread = new Thread(car);
+		carThread.setDaemon(true);
+		carThread.start();
 	}
 
 	// Event Listener on Button[#bShowGraph].onAction
