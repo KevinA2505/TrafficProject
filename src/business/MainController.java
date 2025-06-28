@@ -45,8 +45,7 @@ public class MainController {
 	@FXML
 	private Button bRoads;
 
-	private GridPane grid;
-	private Node lastCarCell;
+        private GridPane grid;
 
 	@FXML
 	private void initialize() {
@@ -71,39 +70,39 @@ public class MainController {
 		pGrid.getChildren().setAll(g);
 	}
 
-	public void updateCarPosition(int row, int col) {
-		if (grid == null) {
-			return;
-		}
+        public void updateCarPosition(int prevRow, int prevCol, int row, int col) {
+                if (grid == null) {
+                        return;
+                }
 
-		Node target = null;
-		for (Node node : grid.getChildren()) {
-			Integer r = GridPane.getRowIndex(node);
-			if (r == null)
-				r = 0;
-			Integer c = GridPane.getColumnIndex(node);
-			if (c == null)
-				c = 0;
-			if (r == row && c == col) {
-				target = node;
-				break;
-			}
-		}
+                Node prevTarget = null;
+                Node target = null;
+                for (Node node : grid.getChildren()) {
+                        Integer r = GridPane.getRowIndex(node);
+                        if (r == null)
+                                r = 0;
+                        Integer c = GridPane.getColumnIndex(node);
+                        if (c == null)
+                                c = 0;
+                        if (prevRow >= 0 && prevCol >= 0 && r == prevRow && c == prevCol) {
+                                prevTarget = node;
+                        }
+                        if (r == row && c == col) {
+                                target = node;
+                        }
+                }
 
-		if (target == null)
-			return;
-
-		final Node btn = target;
-		Platform.runLater(() -> {
-			if (lastCarCell != null && lastCarCell instanceof Button) {
-				((Button) lastCarCell).setStyle("");
-			}
-			if (btn instanceof Button) {
-				((Button) btn).setStyle("-fx-background-color: red;");
-			}
-			lastCarCell = btn;
-		});
-	}
+                final Node pBtn = prevTarget;
+                final Node btn = target;
+                Platform.runLater(() -> {
+                        if (pBtn != null && pBtn instanceof Button) {
+                                ((Button) pBtn).setStyle("");
+                        }
+                        if (btn != null && btn instanceof Button) {
+                                ((Button) btn).setStyle("-fx-background-color: red;");
+                        }
+                });
+        }
 
 	// Event Listener on Button[#bEvent].onAction
 	@FXML
