@@ -36,3 +36,16 @@ Ajusta `ruta/a/javafx/lib` a la ubicación donde tengas instaladas las librería
 
 El código contiene clases y utilidades básicas para la simulación de tráfico y su visualización. Algunas clases (por ejemplo `Incident` y `Road`) se encuentran vacías o en desarrollo. Este repositorio sirve de base para extender la simulación con más funcionalidades.
 
+## Puesta en marcha rápida
+
+Para probar la aplicación puedes clonar este repositorio e importarlo en tu IDE favorito (Eclipse o IntelliJ). Solo necesitas configurar las librerías de **JavaFX** en el classpath y ejecutar `business.Main`. 
+
+El archivo `build.fxbuild` está pensado para usarse con la herramienta e(fx)clipse y generar un JAR autoejecutable.
+
+## Contribución
+
+Las propuestas y mejoras son bienvenidas. Puedes abrir un *issue* o enviar un *pull request* con tus cambios.
+
+## Licencia
+
+Este proyecto se comparte con fines educativos y no cuenta con una licencia abierta definida.
